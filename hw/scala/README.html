@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>README.html</title>
+
+</head>
+
+<body>
+
+<h1>Instructions</h1>
+
+<p>This zipfile contains the assignments for CSC347/447.</p>
+
+<p>For each assignment, you will hand in a single source code file on D2L. Do not hand in a zip file.</p>
+
+<p>For all assignments, you must submit source code that compiles without error.  Submissions where the
+source code does not compile will receive 0 points.  If source code compiles correctly, partial
+credit may be given for assignments where some of the tests fail.  For Scala assignments, you can
+confirm that your source code compiles correctly by running the following command in your repository
+directory:</p>
+
+<pre><code>sbt compile
+</code></pre>
+
+<h1>Software Requirements</h1>
+
+<p>You will need to install:</p>
+
+<ul>
+<li><p>Java SE 8 http://www.oracle.com/technetwork/java/javase/downloads/index.html</p></li>
+<li><p>Scala Build Tool (SBT) http://www.scala-sbt.org/download.html</p></li>
+</ul>
+
+<h1>Scala Build Tool (SBT)</h1>
+
+<p>The Scala Build Tool (SBT http://www.scala-sbt.org/) is used to compile and test the Scala
+assignments.  Files must <strong>NOT</strong> be renamed or refactored, and the test code and build instruction
+files must <strong>NOT</strong> be altered.  Specifically, you should only edit files under <code>src/main/</code>.</p>
+
+<p>SBT will take care of downloading the correct version of Scala for you.  You will need to be
+connected to the Internet when you do this.</p>
+
+<h2>Launch SBT</h2>
+
+<p>From a shell window (Linux or OS X) or CMD/Powershell prompt (Windows), launch SBT using the command
+you set up during SBT installation.  This is usually just <code>sbt</code>.  For example:</p>
+
+<pre><code>$ sbt
+[info] Loading project definition from /csc447/main/project
+[info] Set current project to CSC447 Assignments (in build file:/csc447/main/)
+&gt;
+</code></pre>
+
+<p>NOTE: you <strong>must</strong> be in the directory that contains the file <code>build.sbt</code> and has the directory <code>src</code> when you run the <code>sbt</code> command.  Use <code>cd</code> to change to that directory if necessary.  The <code>build.sbt</code> file contains instructions for building and testing the project.  It will compile code into a new <code>target</code> subdirectory. </p>
+
+<h2>Launch Scala Console from SBT</h2>
+
+<p>To launch the Scala console from the SBT console, run:</p>
+
+<pre><code>console
+</code></pre>
+
+<p>To exit the Scala console and return to the SBT console, enter:</p>
+
+<pre><code>:quit
+</code></pre>
+
+<p>You will have access to your source code files in the Scala console, e.g., you can run:</p>
+
+<pre><code>fp1.fact (5)
+</code></pre>
+
+<p>Note: if you paste into the Scala console, the parser looks for the smallest syntactically correct
+expression, and this may not be what you want.  If this becomes problematic, you should either put
+curly braces around the body of functions when pasting (this has been done for you already in the
+homework assignments), or to investigate the <code>:paste</code> command in the Scala interpreter, i.e., type
+<code>:paste</code>, then paste code in.</p>
+
+<h2>Compiling with SBT</h2>
+
+<p>To compile the Scala source code with SBT, run:</p>
+
+<pre><code>compile
+</code></pre>
+
+<p>To continuously compile, run:</p>
+
+<pre><code>~compile
+</code></pre>
+
+<p>For the assignments, you may prefer to simply run the tests as you go.  However, for tricky
+exercises, you may wish to edit source code, compile it from the SBT console, and try it out in the
+Scala console.</p>
+
+<h2>Testing with SBT</h2>
+
+<p>From the SBT console, you can run various commands to compile and run the tests under <code>src/test</code>.</p>
+
+<p>When you ask SBT to run any tests, it will automatically compile your source code and the test code
+first (if it does not appear to do so, ensure that you have saved your source code file in your text
+editor!).</p>
+
+<p>To run all tests from the SBT console:</p>
+
+<pre><code>test
+</code></pre>
+
+<p>To run all tests for the first functional programming assignment from the SBT console:</p>
+
+<pre><code>testOnly fp1tests
+</code></pre>
+
+<p>The names of the tests for the other Scala assignments can be found by looking under <code>src/test</code>.</p>
+
+<p>To run the tests for exercise 5 from the first functional programming assignment, run the following
+command from the SBT console:</p>
+
+<pre><code>testOnly fp1tests -- -n fp1ex05
+</code></pre>
+
+<p>The most useful mode is to prefix the test command of your choice with ~ (the tilde symbol).  That
+will cause SBT to continually compile and test your code whenever it detects changes have been made.
+That is, for the first functional programming assignment use:</p>
+
+<pre><code>~testOnly fp1tests
+</code></pre>
+
+<h2>Offline Work with SBT</h2>
+
+<p>You need to have Internet connectivity when you initially ask SBT to compile and test in order to download to libraries.</p>
+
+<p>To work offline in SBT once you have the dependencies, run the following command in the SBT console:</p>
+
+<pre><code>set offline := true
+</code></pre>
+
+<h1>Text Editor</h1>
+
+<p>You should edit source code files with a text editor or IDE.  If you are using Notepad,
+Write/Wordpad, or Word to edit code, stop now!</p>
+
+<p>You might consider: </p>
+
+<ul>
+<li>http://www.sublimetext.com/ (OS X, Windows, Linux)</li>
+<li>http://notepad-plus-plus.org/ (Windows)</li>
+</ul>
+
+<p>If you want to go old school:</p>
+
+<ul>
+<li>Emacs</li>
+<li>VIM</li>
+</ul>
+
+<p>Local Variables:
+mode: markdown
+fill-column: 100
+End:</p>
+
+</body>
+</html>

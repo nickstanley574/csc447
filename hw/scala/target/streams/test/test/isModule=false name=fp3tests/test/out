@@ -1,0 +1,21 @@
+[0m[[0m[0minfo[0m] [0m[0m[32mfp3tests:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- EX01 - member *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  false did not equal true (fp3tests.scala:15)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- EX02 - allEqual *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  false did not equal true (fp3tests.scala:20)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- EX03 - stringLengths *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  null did not equal List() (fp3tests.scala:32)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- EX04 - delete1 *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  null did not equal List() (fp3tests.scala:37)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- EX05 - delete2 *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  null did not equal List() (fp3tests.scala:42)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- EX06 - delete3 *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  null did not equal List() (fp3tests.scala:47)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- EX07 - removeDupes1 *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  null did not equal List() (fp3tests.scala:52)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- EX08 - removeDupes2 *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  null did not equal List() (fp3tests.scala:57)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- EX09 - splitAt *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  null did not equal (List(1, 2, 3, 4, 5, 6, 7),List(8, 9, 10, 11, 12, 13, 14, 15)) (fp3tests.scala:62)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- EX10 - allDistinct *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  false did not equal true (fp3tests.scala:71)[0m[0m
