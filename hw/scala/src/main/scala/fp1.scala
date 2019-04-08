@@ -67,11 +67,15 @@ object fp1 {
   // EXERCISE 1: complete the following definition, so that factTest is the list of integers
   // List(1,2,6,24,120).  You must call the "fact" function (five times) defined above instead of
   // hardcoding the numbers 1,2,6,24,120.
-  val factTest : List[Int] = {
-    var l = List[Int]()
-    for (i <- 1 to 5)
-      l = fact(i) :: l
-    l.reverse
+  // val factTest : List[Int] = { I can't do it this way :-(
+  //   var l = List[Int]()
+  //   for (i <- 1 to 5)
+  //     l = fact(i) :: l
+  //   l.reverse
+  // }
+
+  val factTest : List [Int] = { 
+    fact(1) :: fact (2) :: fact (3) :: fact (4) :: fact (5) :: Nil
   }
 
   // EXERCISE 2: complete the following definition of the Fibonacci function.
