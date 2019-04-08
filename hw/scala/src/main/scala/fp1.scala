@@ -131,11 +131,7 @@ object fp1 {
     xs match {
       case Nil => throw new java.util.NoSuchElementException
       case List(x: Int) => xs(0)
-      case v1::v2::remainder => { 
-        var m = v2
-        if (v1 > v2) { m = v1 } 
-        max ( m :: remainder )
-      }
+      case v1::v2::remainder => { max ( { if (v1 > v2) v1 else v2 } :: remainder )}
     } 
   }
 
@@ -146,11 +142,7 @@ object fp1 {
   def maxTailAux (accumulator : Int, xs : List[Int]) : Int = {
     xs match {
       case Nil => accumulator
-      case y::ys => {
-        var max = accumulator
-        if (y > max) { max = y }
-        maxTailAux(max, ys)
-      }
+      case y::ys => { maxTailAux({if (y > accumulator) y else accumulator }, ys)}
     }
   }
 
