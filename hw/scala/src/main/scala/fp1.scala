@@ -68,46 +68,42 @@ object fp1 {
   // List(1,2,6,24,120).  You must call the "fact" function (five times) defined above instead of
   // hardcoding the numbers 1,2,6,24,120.
   val factTest : List[Int] = {
-    // TODO: Change "Nil" to the correct answer.
-    Nil
+    var l = List[Int]()
+    for (i <- 1 to 5)
+      l = fact(i) :: l
+    l.reverse
   }
 
   // EXERCISE 2: complete the following definition of the Fibonacci function.
   def fib (n : Int) : Int = {
-    // TODO: Provide definition here.
-    -1
+    if (n == 0 ) { 0 }
+    else if (n == 1 ) { 1 }
+    else { fib(n-1) + fib(n-2)}
   }
 
   
   // EXERCISE 3: declare the identifier "p1" with a pair consisting of the Int 7 and the String
   // "hello"
-  val p1 : (Int, String) = {
-    // TODO: Provide definition here.
-    null
-  }
+  val p1 : (Int, String) = (7, "hello")
 
   // EXERCISE 4: declare the identifier "t1" with a triple consisting of the Int 7, the String
   // "hello", and the Boolean false
-  val t1 : (Int, String, Boolean) = {
-    // TODO: Provide definition here.
-    null
-  }
+  val t1 : (Int, String, Boolean) = (7, "hello", false)
 
   // EXERCISE 5: write a function "swap" that takes a pair of an Int and a String, and returns a
   // pair of a String and an Int (with the values from the pair passed an argument.  E.g., swap (p1)
   // should return ("hello", 7).  You can use "p._1" and "p._2" to access the first and second
   // components of a pair.
-  def swap (p:(Int,String)) : (String,Int) = {
-    // TODO: Provide definition here.
-    null
-  }
+  def swap (p:(Int,String)) : (String,Int) = (p._2, p._1)
 
   // EXERCISE 6: write a function "sum" that takes a list of integers and sums them.  As with all of
   // the exercises in this assignment, your function MUST be recursive and MUST NOT use a while
   // loop.
   def sum (xs : List[Int]) : Int = {
-    // TODO: Provide definition here.
-    -1
+    xs match {
+      case Nil => 0
+      case y::ys => y + sum(ys)
+    }
   }
 
 
@@ -123,8 +119,7 @@ object fp1 {
   }
 
   def sumTail (xs : List[Int]) : Int = {
-    // TODO: Provide definition here.
-    -1
+    sumTailAux(0, xs)
   }
 
 
@@ -133,8 +128,15 @@ object fp1 {
   // hence the "NoSuchElementException".  Your function MUST be recursive and MUST NOT use a while
   // loop.  You MUST NOT use the "max" method on lists, but can use the "max" method on integers.
   def max (xs : List[Int]) : Int = {
-    // TODO: Provide definition here.
-    -1
+    xs match {
+      case Nil => throw new java.util.NoSuchElementException
+      case List(x: Int) => xs(0)
+      case v1::v2::remainder => { 
+        var m = v2
+        if (v1 > v2) { m = v1 } 
+        max ( m :: remainder )
+      }
+    } 
   }
 
   // EXERCISE 9: given the definition of the function "maxTail" below, complete the
@@ -142,8 +144,14 @@ object fp1 {
   // maximum of a list of integers.  You must not alter the definition of "maxTail".  Your
   // definition for "maxTailAux" must be recursive and not use while loops.
   def maxTailAux (accumulator : Int, xs : List[Int]) : Int = {
-    // TODO: Provide definition here.
-    -1
+    xs match {
+      case Nil => accumulator
+      case y::ys => {
+        var max = accumulator
+        if (y > max) { max = y }
+        maxTailAux(max, ys)
+      }
+    }
   }
 
   def maxTail (xs : List[Int]) : Int = {
@@ -157,8 +165,10 @@ object fp1 {
   // "start" and "end" and produces a "List[Int]" that counts DOWN from "start" to "end" (inclusive
   // at both ends) one at a time.  If "start < end", the empty list must be returned.
   def otpu (start : Int, end : Int) : List[Int] = {
-    // TODO: Provide definition here.
-    null
+    if (start < end) 
+     Nil
+    else 
+      start :: otpu (start - 1, end)
   }
 }
 
