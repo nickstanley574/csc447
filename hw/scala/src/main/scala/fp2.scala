@@ -34,16 +34,21 @@ object fp2 {
   // for Scala's builtin List type.  You must not use the builtin "map" method.
   // Your implementation of "map" MUST be recursive.
   def map [A,B] (xs:List[A], f:A=>B) : List[B] = {
-    // TODO: Provide definition here.
-    null
+    xs match {
+      case Nil    => Nil
+      case y::ys  => f(y) :: map(ys, f)
+    }
   }
 
   // EXERCISE 2: complete the following recursive definition of a "filter" function
   // for Scala's builtin List type.  You must not use the builtin "filter" method.
   // Your implementation of "filter" MUST be recursive.
   def filter [A] (xs:List[A], f:A=>Boolean) : List[A] = {
-    // TODO: Provide definition here.
-    null
+    xs match {
+      case Nil              => Nil
+      case y::ys  if f (y)  => y :: filter (ys, f)
+      case _::ys            => filter (ys, f)  
+    }
   }
 
   // EXERCISE 3: complete the following recursive definition of an "append" function
@@ -51,19 +56,23 @@ object fp2 {
   // Your implementation of "append" MUST be recursive.
   // HINT: use "::" in the body of the cons-cell case.
   def append [A] (xs:List[A], ys:List[A]) : List[A] = {
-    // TODO: Provide definition here.
-    null
+    xs match { 
+        case List() => ys
+        case z :: zs => z :: append(zs, ys)
+    }
   }
 
-  // EXERCISE 4: complete the following recursive definition of a "flatten" function
+  // EXERCISE 4: complete fthe following recursive definition of a "flatten" function
   // for Scala's builtin List type.  You must not use the builtin "flatten" method.
   // Your implementation of "flatten" MUST be recursive.
   // HINT: use either ":::" or your definition of "append" in the body of the cons-cell case.
   // EXAMPLE:
   // - flatten (List ((1 to 5).toList, (6 to 10).toList, (11 to 15).toList)) == (1 to 15).toList
   def flatten [A] (xss:List[List[A]]) : List[A] = {
-    // TODO: Provide definition here.
-    null
+    xss match {
+      case Nil     => Nil 
+      case xs::xss => xs ::: flatten(xss)
+    }
   }
 
   // EXERCISE 5: complete the following recursive definition of a "foldLeft" function
@@ -71,9 +80,14 @@ object fp2 {
   // Your implementation of "foldLeft" MUST be recursive.
   // HINT:   foldLeft (  Nil, e, f) == e
   //         foldLeft (y::ys, e, f) == foldLeft (ys, f (e, y), f)
+  // foldLeft ((1 to 3).toList, "@", f) === "@[1][2][3]"
   def foldLeft [A,B] (xs:List[A], e:B, f:(B,A)=>B) : B = {
-    // TODO: Provide definition here.
-    e
+    // println("--> foldLeft()")
+    // println(xs)
+    xs match {
+      case Nil => e
+      case y::ys => foldLeft (ys, f (e, y), f)
+    }
   }
 
   // EXERCISE 6: complete the following recursive definition of a "foldRight" function
@@ -82,8 +96,10 @@ object fp2 {
   // HINT:   foldRight (  Nil, e, f) == e
   //         foldRight (y::ys, e, f) == f (y, foldRight (ys, e, f))
   def foldRight [A,B] (xs:List[A], e:B, f:(A,B)=>B) : B = {
-    // TODO: Provide definition here.
-    e
+    xs match {
+      case Nil => e
+      case y::ys => f (y, foldRight (ys, e, f))
+    }
   }
 
   // EXERCISE 7: complete the following definition of a "joinTerminateRight" function
@@ -94,8 +110,8 @@ object fp2 {
   // - joinTerminateRight (List ("a"), ";") == "a;"
   // - joinTerminateRight (List ("a","b","c","d"), ";") == "a;b;c;d;"
   def joinTerminateRight (xs : List[String], term : String) : String = {
-    // TODO: Provide definition here.
-    null
+    // def f (n : String, s : String) : String = n + term + s
+    foldRight(xs, "", (n : String, s : String) => n + term + s)
   }
 
   // EXERCISE 8: complete the following definition of a "joinTerminateLeft" function
@@ -106,8 +122,7 @@ object fp2 {
   // - joinTerminateLeft (List ("a"), ";") == "a;"
   // - joinTerminateLeft (List ("a","b","c","d"), ";") == "a;b;c;d;"
   def joinTerminateLeft (xs : List[String], term : String) : String = {
-    // TODO: Provide definition here.
-    null
+    foldLeft(xs,"",(n : String, s : String)  => n + s + term)
   }
 
   // EXERCISE 9: complete the following recursive definition of a "firstNumGreaterThan" function
@@ -118,8 +133,11 @@ object fp2 {
   // EXAMPLES:
   // - firstNumGreaterThan (5, List (4, 6, 8, 5)) == 6
   def firstNumGreaterThan (a : Int, xs : List[Int]) : Int = {
-    // TODO: Provide definition here.
-    -1
+    xs match {
+      case Nil                => throw new java.util.NoSuchElementException
+      case y::ys if (y >= a)  => y 
+      case _::ys              => firstNumGreaterThan(a, ys)
+    }
   }
 
   // EXERCISE 10: complete the following recursive definition of a "firstIndexNumGreaterThan" function
@@ -132,8 +150,49 @@ object fp2 {
   // - firstIndexNumGreaterThan (5, List (4, 6, 8, 5)) == 1
   // HINT: this is a bit easier to write if you use an auxiliary function.
   def firstIndexNumGreaterThan (a : Int, xs : List[Int]) : Int = {
-    // TODO: Provide definition here.
-    -1
+    firstIndexNumGreaterThanAux(a : Int, xs : List[Int], 0)
   }
+
+  private def firstIndexNumGreaterThanAux (a : Int, xs : List[Int], i : Int ) : Int = {
+    xs match {
+      case Nil                => throw new java.util.NoSuchElementException
+      case y::ys if (y >= a)  => i 
+      case _::ys              => firstIndexNumGreaterThanAux(a, ys, i+1)
+    }
+  }
+
+    // ------------- OR! -------------
+
+  // def firstIndexNumGreaterThan (a : Int, xs : List[Int], index : Int = 0) : Int = {
+  //     xs match {
+  //       case Nil                => throw new java.util.NoSuchElementException
+  //       case y::ys if (y >= a)  => index 
+  //       case _::ys              => firstIndexNumGreaterThan(a, ys, index+1)
+  //   }
+  // }
 }
+
+
+// sbt:CSC447> testOnly fp2tests
+// [info] fp2tests:
+// [info] - EX01 - map
+// [info] - EX02 - filter
+// [info] - EX03 - append
+// [info] - EX04 - flatten
+// [info] - EX05 - foldLeft
+// [info] - EX06 - foldRight
+// [info] - EX07 - joinTerminateRight
+// [info] - EX08 - joinTerminateLeft
+// [info] - EX09 - firstNumGreaterThan
+// [info] - EX10 - firstIndexNumGreaterThan
+// [info] ScalaTest
+// [info] Run completed in 154 milliseconds.
+// [info] Total number of tests run: 10
+// [info] Suites: completed 1, aborted 0
+// [info] Tests: succeeded 10, failed 0, canceled 0, ignored 0, pending 0
+// [info] All tests passed.
+// [info] Passed: Total 10, Failed 0, Errors 0, Passed 10
+// [success] Total time: 0 s, completed Apr 15, 2019, 1:14:21 PM
+
+
 
