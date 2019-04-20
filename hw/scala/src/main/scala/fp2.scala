@@ -146,6 +146,28 @@ object fp2 {
     foldLeft(xs,"",(n : String, s : String)  => n + s + term)
   }
 
+/*
+joinTerminateLeft (List ("a","b","c","d"), ";")
+
+--init call 
+foldLeft(List ("a","b","c","d"), "", f(n,s)=> n + s + ";")
+  
+                   xs                    e             f
+                   --                   ---            -
+1) foldLeft(List ("b","c","d"),  ""       + "a" + ";", f)
+2) foldLeft(List ("c","d")    ,  "a;"     + "b" + ";", f)
+3) foldLeft(List ("d")        ,  "a;b;"   + "c" + ";", f)
+4) foldLeft(Nil               ,  "a;b;c;" + "d" + ";", f)
+
+-- base case! 
+foldLeft(Nil, "a;b;c;d;", f) = e = "a;b;c;d;" <-- last return 
+
+*/
+
+
+
+
+
   // EXERCISE 9: complete the following recursive definition of a "firstNumGreaterThan" function
   // to find the first number greater than or equal to "a" in a list of integers "xs".
   // If the list is empty or there is no number greater than or equal to "a",
