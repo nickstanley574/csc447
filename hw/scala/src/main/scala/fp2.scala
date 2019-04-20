@@ -113,6 +113,27 @@ object fp2 {
     // def f (n : String, s : String) : String = n + term + s
     foldRight(xs, "", (n : String, s : String) => n + term + s)
   }
+  /*
+  joinTerminateRight (List ("a","b","c","d"), ";")
+
+  -- init call 
+  foldRight(List ("a","b","c","d"), "", (n : String, s : String) => n + ";" + s)
+  xs = List ("a","b","c","d")  e="" f=(n : String, s : String) => n + ";" + s)
+
+  1) "a" + ";" + foldRight (List("b","c","d"), "", f)           |     f ("a", foldRight (List("b","c","d"), "", f))
+  2) "b" + ";" + foldRight (List("c","d")    , "", f)           |     f ("b", foldRight (List("c","d"),     "", f))
+  3) "c" + ";" + foldRight (List("d")        , "", f)           |     f ("c", foldRight (List("d"),         "", f))
+  4) "d" + ";" + foldRight (Nil              , "", f)           |     f ("d", foldRight (List(),            "", f))
+
+  -- base case! 
+  foldRight(Nil, "", f) = ""
+
+  -- return back up r calls
+  4) "d" + ";" + ""        = "d;"
+  3) "c" + ";" + "d;"      = "c;d;"
+  2) "b" + ";" + "c;d;"    = "b;c;d"
+  1) "a" + ";" + "b;c;d;"  = "a;b;c;d" <-- last return 
+  */
 
   // EXERCISE 8: complete the following definition of a "joinTerminateLeft" function
   // to take a list of strings "xs" and concatenate all strings using a string "term"
