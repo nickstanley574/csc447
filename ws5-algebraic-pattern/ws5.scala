@@ -218,6 +218,191 @@ def reverse2 [X] (xs:List[X]) : List[X] = {
 
 // 4.1 flatMap for Lists
 
+def repeat [X] (x:X, n:Int) : List[X] = {
+  if (n == 0)
+    Nil
+  else 
+    x :: repeat (x, n - 1)
+}
 
+val xs:List[(Char,Int)] = List(('a',2), ('b',4), ('c',8))
+
+val ys = xs.map((p:(Char,Int)) => repeat (p._1, p._2))
+// ys: List[List[Char]] = List(List(a, a), List(b, b, b, b), List(c, c, c, c, c, c, c, c))
+
+
+val zs = xs.flatMap ((p:(Char,Int)) => repeat(p._1, p._2))
+// zs: List[Char] = List(a, a, b, b, b, b, c, c, c, c, c, c, c, c
+
+val zs2 = xs.flatten((p:(Char,Int)) => repeat (p._1, p._2))
+// zs2: List[Char] = List(a, a, b, b, b, b, c, c, c, c, c, c, c, c)
+
+val zs3 = xs.map((p:(Char,Int)) => repeat (p._1, p._2)).flatten
+// zs3: List[Char] = List(a, a, b, b, b, b, c, c, c, c, c, c, c, c)
+
+
+// 5.1 Java Translation
+// class Counter {
+//   private static int numCounters = 0;
+
+//   final int id;
+//   int count;
+
+//   Counter (int initial) {
+//     this.id = numCounters;
+//     this.count = initial;
+//     numCounters++;
+//   }
+
+//   static int getNumCounters () {
+//     return numCounters;
+//   }
+
+//   int getId () {
+//     return this.id;
+//   }
+
+//   int getNextCount () {
+//     return this.count++;
+//   }
+// }
+
+object Counter {
+  private var numCounters = 0 
+  def getNumCounters () : Int = numCounters
+  def incNumCounters () : Unit = numCounters  = numCounters + 1 
+}
+
+class Counter (initial:Int) {
+  private val id:Int = Counter.getNumCounters
+  private var count:Int = initial 
+  Counter.incNumCounters
+
+  def getId () : Int = id
+
+  def getNextCount() : Int = {
+    var tmp = count
+    count = count + 1
+    tmp
+  }
+
+}
+
+
+// 6.1 MyList Case Class
+
+trait MyList [+X]
+case object MyNil                              extends MyList[Nothing]
+case class MyCons[+X] (head:X, tail:MyList[X]) extends MyList[X]
+
+def length [X] (xs:MyList[X]) : Int = {
+  xs match {
+    case MyNil => 0
+    case MyCons (_,ys) => 1 + length(ys)
+  }
+}
+
+def toList [X] (xs:MyList[X]) : List[X] = {
+  xs match {
+    case MyNil => Nil
+    case MyCons (y, ys) => y::toList(ys) 
+  }
+
+def fromList [X] (xs:List[X]) : MyList[X] = {
+  xs match {
+    case Nil => MyNil
+    case y::ys => MyCons(y, fromList(ys))
+  }
+}
+
+def append [X] (xs:MyList[X], ys:MyList[X]) : MyList[X] = {
+  xs match {
+    case MyNil => ys
+    case MyCons(z,zs) => MyCons(z, append(zs,ys))
+  }
+}
+
+/*
+scala> val lst = List(1,2,3,4)
+lst: List[Int] = List(1, 2, 3, 4)
+
+scala> val myLst = fromList(lst)
+myLst: MyList[Int] = MyCons(1,MyCons(2,MyCons(3,MyCons(4,MyNil))))
+
+scala> val lst2 = List(5,6)
+lst2: List[Int] = List(5, 6)
+
+scala> val myLst2 = fromList(lst2)
+myLst2: MyList[Int] = MyCons(5,MyCons(6,MyNil))
+
+scala> append(myLst, myLst2)
+res5: MyList[Int] = MyCons(1,MyCons(2,MyCons(3,MyCons(4,MyCons(5,MyCons(6,MyNil))))))
+*/
+
+def map[X,Y] (xs:MyList[X], f:X=>Y) : MyList[Y] = {
+  xs match {
+    case MyNil => MyNil 
+    case MyCons (y, ys) => MyCons MyCons(f(y), map(ys, f))
+  }
+}
+
+//6.2 Binary Tree Case Class
+
+trait Tree[+X]
+case object Leaf                                 extends Tree[Nothing]
+case class  Node[+X] (l:Tree[X], c:X, r:Tree[X]) extends Tree[X]
+
+val tree1:Tree[Int] = Leaf
+
+val tree2:Tree[Int] = Node (Leaf, 5, Leaf)
+
+val tree3:Tree[Int] = Node (Node (Leaf, 2, Leaf), 3, Node (Leaf, 4, Leaf))
+
+// Find the size of a binary tree.  Leaves have size zero here.
+def size [X] (t:Tree[X]) : Int = {
+  t match {
+    case Leaf => 0;
+    case Node (t1,_,t2) => size(t1) + 1 + size(t2)
+  }
+}
+
+/*
+
+defined trait Tree
+defined object Leaf
+defined class Node
+tree1: Tree[Int] = Leaf
+tree2: Tree[Int] = Node(Leaf,5,Leaf)
+tree3: Tree[Int] = Node(Node(Leaf,2,Leaf),3,Node(Leaf,4,Leaf))
+size: [X](t: Tree[X])Int
+
+scala> size(tree1)
+res6: Int = 0
+
+scala> size(tree2)
+res7: Int = 1
+
+scala> size(tree3)
+res8: Int = 3
+
+*/
+
+// Insert a number into a sorted binary tree.
+def insert [X] (x:X, t:Tree[X], lt:(X,X)=>Boolean) : Tree[X] = {
+  t match {
+    case Leaf => (Leaf, x, Leaf)                                             // INSERT
+    case Node(t1, v, t2) if (lt(x,v)) => Node (insert(x, t1, lt), c, t2)     // GO LEFT 
+    case Node(t1, v, t2) if (lt(v,x)) => Node (t1, c, insert(x,t2,lt))       // GO RIGNT
+    case Node(t1, v, t2) if (x == c)  => Node (t1, c, t2)                    // OVERRWRITE
+  }
+}
+
+// Put the elements of the tree into a list using an in-order traversal.
+def inorder [X] (t:Tree[X]) : List[X] = {
+  t match {
+    Leaf => Nil
+    case Node (t1, c, t2) => inorder inorder(t1) ::: List(c) ::: inorder (t2)
+  }
+}
 
 
