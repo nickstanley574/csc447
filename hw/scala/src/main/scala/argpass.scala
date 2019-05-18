@@ -98,3 +98,20 @@ object argpass {
   }
 }
 
+/*
+sbt:CSC447> testOnly argpasstests
+[info] Compiling 1 Scala source to /home/nstanley/Dropbox/github/574/csc447/hw/scala/target/scala-2.12/classes ...
+[info] Done compiling.
+[info] argpasstests:
+[info] - EX01 - refint1
+[info] - EX02 - refint2
+[info] - EX03 - refint3
+[info] - EX04 - refint4
+[info] - EX05 - refint5
+[info] ScalaTest
+[info] Run completed in 123 milliseconds.
+[info] Total number of tests run: 5
+[info] Suites: completed 1, aborted 0
+[info] Tests: succeeded 5, failed 0, canceled 0, ignored 0, pending 0
+[info] All tests passed.
+*/
